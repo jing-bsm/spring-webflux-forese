@@ -1,5 +1,6 @@
 logging:
-  config: classpath:log4j2-local.xml
+  config: classpath:log4j2-aws.xml
+#  config: classpath:log4j2-local.xml
 #  config: classpath:log4j2-file.xml
 
 app-env: dev

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="warn" monitorInterval="5">
+    <Properties>
+        <Property name="KAFKA_ACKS">1</Property>
+        <Property name="KAFKA_REQUEST_TIMEOUT">30000</Property>
+        <Property name="KAFKA_RETRIES">3</Property>
+        <Property name="KAFKA_RETRY_BACKOFF">10000</Property>
+        <Property name="KAFKA_METADATA_MAX_AGE">300000</Property>
+        <Property name="KAFKA_RECONNECT_BACKOFF">50</Property>
+        <Property name="KAFKA_MAX_BLOCK">60000</Property>
+        <Property name="SPRING_VAULT_LOG_LEVEL">INFO</Property>
+        <Property name="EXTERNAL_LIBRARY_LOG_LEVEL">ERROR</Property>
+        <Property name="FORESEE_LIBRARY_LOG_LEVEL">ERROR</Property>
+        <Property name="SERVICE_LOG_LEVEL">DEBUG</Property>
+    </Properties>
+
+    <!-- This filter is used to generally enable TRACE logging if "x-debug-enabled" in the ThreadContext has the value "true" -->
+    <DynamicThresholdFilter key="x-debug-enabled" onMatch="ACCEPT" onMismatch="NEUTRAL">
+        <KeyValuePair key="true" value="DEBUG"/>
+    </DynamicThresholdFilter>
+
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <TraceJsonLayout applicationName="CORE-LOGGING-TEST"/>
+        </Console>
+
+        <Kafka name="Kafka" topic="${sys:KAFKA_TRACE_LOGGING_TOPIC}"  ignoreExceptions="false" syncSend="false">
+            <TraceJsonLayout applicationName="CORE-LOGGING-TEST"/>
+            <Property name="bootstrap.servers">
+                ${sys:KAFKA_ADDRESS}
+            </Property>
+            <Property name="acks">
+                ${sys:KAFKA_ACKS}
+            </Property>
+            <Property name="metadata.max.age.ms">
+                ${sys:KAFKA_METADATA_MAX_AGE}
+            </Property>
+            <Property name="retries">
+                ${sys:KAFKA_RETRIES}
+            </Property>
+            <Property name="retry.backoff.ms">
+                ${sys:KAFKA_RETRY_BACKOFF}
+            </Property>
+            <Property name="request.timeout.ms">
+                ${sys:KAFKA_REQUEST_TIMEOUT}
+            </Property>
+            <Property name="reconnect.backoff.ms">
+                ${sys:KAFKA_RECONNECT_BACKOFF}
+            </Property>
+            <Property name="max.block.ms">
+                ${sys:KAFKA_MAX_BLOCK}
+            </Property>
+        </Kafka>
+    </Appenders>
+    <Loggers>
+        <AsyncRoot level="INFO">
+            <AppenderRef ref="Kafka"/>
+        </AsyncRoot>
+        <Logger name="org.apache.kafka" level="OFF" /> <!-- avoid recursive logging -->
+    </Loggers>
+</Configuration>
