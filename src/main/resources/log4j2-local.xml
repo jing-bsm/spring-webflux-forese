@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN" monitorInterval="5">
+
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout
+                    pattern="[%d{ISO8601}] [%level] [CORE-LOGGING-TEST] [%X{X-B3-TraceId}] [%X{X-B3-SpanId}] [%X{x-acs-username}] [%X{x-acs-host}] [%t] [%logger{36}] [%X{x-acs-locale}] [%X{x-acs-ipaddress}] [%msg]%n"/>
+        </Console>
+    </Appenders>
+
+    <Loggers>
+        <Logger name="org.apache.kafka" level="OFF"></Logger>
+        <AsyncRoot level="INFO">
+            <AppenderRef ref="Console"/>
+        </AsyncRoot>
+    </Loggers>
+</Configuration>
