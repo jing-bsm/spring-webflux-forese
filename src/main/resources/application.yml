@@ -6,3 +6,21 @@ logging:
 app-env: dev
 
 spring.application.name: CORE-LOGGING-TEST
+
+spring:
+  kafka:
+    bootstrap-servers: 172.18.0.51:9092
+
+event-bus:
+  function:
+    fun1:
+      topic: eventBus.helloword.fun1
+      consumer-group: helloworldConsumer
+
+platform:
+  eventbus:
+    application-name: ${spring.application.name}
+    client:
+      kafka:
+        bootstrap:
+          servers: ${spring.kafka.bootstrap-servers}

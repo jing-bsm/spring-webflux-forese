@@ -27,6 +27,21 @@
                 <artifactId>lombok</artifactId>
                 <version>${lombok.version}</version>
             </dependency>
+            <dependency>
+                <groupId>com.foresee.platform.eventbus</groupId>
+                <artifactId>event-bus-spring</artifactId>
+                <version>2.3.3</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>com.foresee.platform</groupId>
+                        <artifactId>file-service-core</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>com.foresee.platform</groupId>
+                        <artifactId>core-logging</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -65,6 +80,21 @@
             <groupId>com.foresee.platform</groupId>
             <artifactId>log4j2-ext</artifactId>
             <version>${core-logging.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.foresee.platform.eventbus</groupId>
+            <artifactId>event-bus-spring</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.foresee.platform</groupId>
+            <artifactId>core-logging-spring-common</artifactId>
+            <version>${core-logging.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-codec</groupId>
+            <artifactId>commons-codec</artifactId>
+            <version>1.11</version>
+            <scope>runtime</scope>
         </dependency>
     </dependencies>
 
