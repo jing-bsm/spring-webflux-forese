@@ -1,0 +1,25 @@
+apiVersion: gateway.solo.io/v1
+kind: VirtualService
+metadata:
+  annotations:
+  name: default
+  namespace: gloo-system
+spec:
+  virtualHost:
+    domains:
+    - '*'
+    routes:
+    - matchers:
+      - prefix: /feedback-admin
+      routeAction:
+        single:
+          upstream:
+            name: default-fs-svc-feedback-admin-8080
+            namespace: gloo-system
+    - matchers:
+      - prefix: /settings-service
+      routeAction:
+        single:
+          upstream:
+            name: default-fs-svc-settings-8080
+            namespace: gloo-system

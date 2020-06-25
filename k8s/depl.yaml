@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app.foresee/name: fs-feedback-admin
+  name: fs-feedback-admin
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.foresee/name: fs-feedback-admin
+  template:
+    metadata:
+      labels:
+        app.foresee/name: fs-feedback-admin
+    spec:
+      containers:
+      - image: 10.196.136.251:29000/feedback-admin:v0.1
+        name: fs-feedback-admin
+        ports:
+        - containerPort: 8080
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app.foresee/name: fs-settings
+  name: fs-settings
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.foresee/name: fs-settings
+  template:
+    metadata:
+      labels:
+        app.foresee/name: fs-settings
+    spec:
+      containers:
+      - image: 10.196.136.251:29000/settings:v0.1
+        name: fs-settings
+        ports:
+        - containerPort: 8080
